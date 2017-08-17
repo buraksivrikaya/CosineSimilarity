@@ -1,1 +1,0 @@
-CosSimilarity.o: ../CosSimilarity.c
