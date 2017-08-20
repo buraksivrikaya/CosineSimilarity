@@ -1,76 +1,76 @@
+/*
+ * CosSimilarity.c
+ *
+ *  Created on: Aug 16, 2017
+ *      Author: buraks
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "LinkedList.h"
 
-struct node {
-   int data;
-   char* key;
-   struct node *next;
-};
-
-struct node *head = NULL;
-struct node *current = NULL;
-
-//display the list
-void printList() {
-   struct node *ptr = head;
+void printList(Node* r) {
+   struct Node *ptr = r->head;
    printf("\n[ ");
-	
-   //start from the beginning
+
    while(ptr != NULL) {
-      printf("(%s,%d) ",ptr->key,ptr->data);
+      printf("(%s,%d) ",ptr->word,ptr->count);
       ptr = ptr->next;
    }
 	
    printf(" ]");
 }
 
-//insert link at the first location
-void insertFirst(char* key, int data) {
-   //create a link
-   struct node *link = (struct node*) malloc(sizeof(struct node));
-
-   strcpy(&link->key, &key);
-   link->data = data;
-	
-   //point it to old first node
-   link->next = head;
-	
-   //point first to new first node
-   head = link;
+Node* newNode(){
+   struct Node *r = (struct Node*) malloc(sizeof(struct Node));
+   r->head = NULL;
+   r->current = NULL;
+   return r;
 }
 
-//is list empty
-bool isEmpty() {
-   return head == NULL;
+void insertFirst(Node* r, char* word, int count){
+   if(find(r, word)){
+       struct Node* temp = find(r,word);
+       temp->count += count;
+   }
+   else{
+      struct Node *link = (struct Node*) malloc(sizeof(struct Node));
+      link->word = malloc(strlen(word)+1);
+      strcpy(link->word, word);
+      link->count = count;
+      link->next = r->head;
+      r->head = link;
+   }
 }
 
-int length() {
+bool isEmpty(Node* r){
+   return r->head == NULL;
+}
+
+int length(Node* r) {
    int length = 0;
-   struct node *current;
+   struct Node *current;
 	
-   for(current = head; current != NULL; current = current->next) {
+   for(current = r->head; current != NULL; current = current->next) {
       length++;
    }
 	
    return length;
 }
 
-//find a link with given key
-struct node* find(char* key) {
+struct Node* find(Node* r, char* word) {
 
    //start from the first link
-   struct node* current = head;
+   struct Node* current = r->head;
 
    //if list is empty
-   if(head == NULL) {
+   if(r->head == NULL) {
       return NULL;
    }
 
    //navigate through list
-   while(strcmp(&current->key, &key)!=0) {
+   while(strcmp(current->word, word)!=0) {
 	
       //if it is last node
       if(current->next == NULL) {
@@ -84,24 +84,18 @@ struct node* find(char* key) {
    //if data found, return the current Link
    return current;
 }
+/*
+int main(void)
+{
+   Node* test = newNode();
+   insertFirst(test, "31231asd", 1);
 
-main() {
-   insertFirst("1231",10);
-   insertFirst("2asda",20);
-   insertFirst("asdgq3",30);
-   insertFirst("4wqwqe",1);
-   insertFirst("qweqw5",40);
-   insertFirst("safq6",56); 
+   insertFirst(test, "q3as31asd", 1);
 
-   printf("IsEmpty/Length %d/%d: ", isEmpty(), length()); 
-	
-   //print list
-   printList();
+   insertFirst(test, "bsd31231asd", 1);
+   insertFirst(test, "bsd31231asd", 1);
+   printList(test);
+   if(find(test, "bsd31231asd")){printf("\nfound\n");}else{printf("\nnotfound\n");}
+   //insertFirst(test, "asdas", 12);
 
-   if(find("safq6")==NULL){
-	printf("\nnot in list\n");
-   }else{
-	printf("\nin list\n");	
-}
-}
- 
+}*/
