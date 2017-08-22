@@ -1,9 +1,12 @@
+OBJS =  CosSimilarity.c LinkedList.c FileReader.c
 CC = gcc
-CFLAGS = -lm
-OBJ = CosSimilarity.o
-PROG = CosSim
-CosSimilarity: $(OBJ)
-	$(CC) -o $(PROG) $(CFLAGS) 
+LIBS = -lm
+
+CosSim:${OBJ}
+	${CC} ${CFLAGS} ${INCLUDES} -o $@ ${OBJS} ${LIBS}
+
 clean:
-	-rm -f $(OBJ)
-	-rm -f $(PROG)
+	-rm -f *.o core *.core CosSim
+
+.cpp.o:
+	${CC} ${CFLAGS} ${INCLUDES} -c $<
