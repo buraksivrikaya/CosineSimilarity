@@ -1,2 +1,0 @@
-fgetc(file) to  char. You character strings 
-The functions bla bla bla bla 

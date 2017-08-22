@@ -1,2 +1,0 @@
-The functions printf( ) and scanf( )   types, plus null-terminated character strings. 
- character strings  char. Bla bla bla bla 
