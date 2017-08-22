@@ -12,14 +12,25 @@
 
 void printList(Node* r) {
    struct Node *ptr = r->head;
-   printf("\n[ ");
+   printf("[ ");
 
    while(ptr != NULL) {
       printf("(%s,%d) ",ptr->word,ptr->count);
       ptr = ptr->next;
    }
 	
-   printf(" ]");
+   printf(" ]\n\n");
+}
+
+void printListWords(Node* r) {
+   struct Node *ptr = r->head;
+
+   while(ptr != NULL) {
+      printf("%s ",ptr->word);
+      ptr = ptr->next;
+   }
+	
+   printf("\n");
 }
 
 Node* newNode(){
@@ -94,6 +105,7 @@ int main(void)
 
    insertFirst(test, "bsd31231asd", 1);
    insertFirst(test, "bsd31231asd", 1);
+   insertFirst(test, "bsd31231asd", 3);
    printList(test);
    if(find(test, "bsd31231asd")){printf("\nfound\n");}else{printf("\nnotfound\n");}
    //insertFirst(test, "asdas", 12);

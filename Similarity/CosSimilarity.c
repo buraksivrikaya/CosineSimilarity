@@ -8,19 +8,26 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "LinkedList.h"
+
 /* constant test variables
  */
+/*
 const int TEST_RUN = 1;
 const int TEST_CONST_FILECOUNT = 3;
 const int TEST_CONST_SIMWORDSCOUNT = 5;
-
+*/
 /* fileCount : number of files that determines rows
  * simWordsCount : nuber of words that pass 10 > term_count >= number_of_files
  */
-void printMatrix(int fileCount, int simWordsCount, int docTermMatrix[][simWordsCount]){
-	for(int i = 0; i < fileCount; i++){
-		for(int j = 0; j < simWordsCount; j++){
-			printf("%d ", docTermMatrix[i][j]);
+void printMatrix(int docCount, char* fileNames[docCount], Node* eliminatedWords, int finalMatrix[][length(eliminatedWords)]){
+	printf("-Matrix to compare :\n");
+	printf("FILE\\WORDS: ");
+	printListWords(eliminatedWords);
+	for(int k = 0; k < docCount; k++){
+		printf("%s ",fileNames[k]);
+		for(int l = 0; l < length(eliminatedWords); l++){
+			printf(" %d ", finalMatrix[k][l]);
 		}
 		printf("\n");
 	}
@@ -30,28 +37,29 @@ void printMatrix(int fileCount, int simWordsCount, int docTermMatrix[][simWordsC
 /*
  * cos similarity calculation
  */
-void calcSim(int fileCount, int simWordsCount, int docTermMatrix[][simWordsCount]){
+void calcSim(int fileCount, char* fileNames[fileCount],int simWordsCount, int docTermMatrix[][simWordsCount]){
 
     for(int f = 0; f < fileCount; f++){
     	int f1 = f;
     	int f2 = (f + 1)%fileCount;
 
-        int dotProduct = 0;
-        int normA = 0;
-        int normB = 0;
+        double dotProduct = 0;
+        double normA = 0;
+        double normB = 0;
 
         for(int i = 0; i < simWordsCount; i++) {
-            dotProduct += docTermMatrix[f1][i] * docTermMatrix[f2][i];
-            normA += docTermMatrix[f1][i]*docTermMatrix[f1][i];
-            normB += docTermMatrix[f2][i]*docTermMatrix[f2][i];
+            dotProduct += (double) docTermMatrix[f1][i] * docTermMatrix[f2][i];
+            normA += (double) docTermMatrix[f1][i]*docTermMatrix[f1][i];
+            normB += (double) docTermMatrix[f2][i]*docTermMatrix[f2][i];
         }
         double result = dotProduct / (sqrt(normA) * sqrt(normB));
-        printf("%d - %d similarity = %f \n", f1, f2, result);
+        printf("%s - %s similarity = %f \n", fileNames[f1], fileNames[f2], result);
     }
 }
 /*
  * TEST FOR COS SIMILARITY
  * */
+/*
 int main(void)
 {
 	if(TEST_RUN){
@@ -83,4 +91,4 @@ int main(void)
 
 	}
 	return 1;
-}
+}*/
